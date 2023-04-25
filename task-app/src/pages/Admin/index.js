@@ -10,6 +10,7 @@ import {
   orderBy,
   where,
   deleteDoc,
+  updateDoc,
   doc
 } from 'firebase/firestore'
 
@@ -56,6 +57,10 @@ export default function Admin() {
       return
     }
 
+    if (editTarefa?.id) {
+      handleUpdateTarefa()
+      return
+    }
     await addDoc(collection(db, 'tarefas'), {
       tarefa: tarefaInput,
       created: new Date(),
@@ -79,6 +84,19 @@ export default function Admin() {
     setEditTarefa(item)
   }
 
+  async function handleUpdateTarefa() {
+    const docRef = doc(db, 'tarefas', editTarefa?.id)
+    await updateDoc(docRef, {
+      tarefa: tarefaInput
+    })
+      .then(() => {
+        console.log('Tarefa atualizada!')
+        setTarefaInput('')
+        setEditTarefa({})
+      })
+      .catch(() => console.log('Não foi possível realizar a ação!'))
+  }
+
   async function deleteTarefa(itemId) {
     const docRef = doc(db, 'tarefas', itemId)
     await deleteDoc(docRef)
@@ -98,7 +116,7 @@ export default function Admin() {
 
         {Object.keys(editTarefa).length > 0 ? (
           <button
-            style={{backgroundColor: '#6add39'}}
+            style={{backgroundColor: '#38b304'}}
             className="btn-register"
             type="submit"
           >
