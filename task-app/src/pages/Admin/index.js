@@ -34,7 +34,7 @@ export default function Admin() {
         where('userUid', '==', data?.uid)
       )
 
-      const unsub = onSnapshot(q, (snapshot) => {
+      onSnapshot(q, (snapshot) => {
         const lista = []
 
         snapshot.forEach((doc) => {
