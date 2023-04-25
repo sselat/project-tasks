@@ -2,6 +2,7 @@ import {Route, Routes} from 'react-router-dom'
 import Home from '../pages/Home'
 import Register from '../pages/Register'
 import Admin from '../pages/Admin'
+import Private from './Private'
 
 export default function RoutesApp() {
   return (
@@ -16,7 +17,11 @@ export default function RoutesApp() {
       />
       <Route
         path="/admin"
-        element={<Admin />}
+        element={
+          <Private>
+            <Admin />
+          </Private>
+        }
       />
     </Routes>
   )
